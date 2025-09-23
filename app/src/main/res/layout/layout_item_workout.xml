@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:id="@+id/cvWorkout"
+    app:cardBackgroundColor="?attr/colorPrimaryContainer"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- Workout Name -->
+        <TextView
+            android:id="@+id/tvWorkoutName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:text="Push Day"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <!-- Workout Type -->
+        <TextView
+            android:id="@+id/tvWorkoutType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:text="Type: PUSH"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            android:layout_marginTop="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp">
+            <!-- Exercise count -->
+            <TextView
+                android:id="@+id/tvExerciseCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodySmall"
+                android:text="4 Exercises"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:layout_marginTop="2dp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <!-- Timestamp (optional, for history) -->
+            <TextView
+                android:id="@+id/tvWorkoutDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.Material3.BodySmall"
+                android:text="21 Sept 2025"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

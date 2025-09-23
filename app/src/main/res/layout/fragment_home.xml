@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".ui.home.HomeFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:title="Placeholder"
+        app:titleCentered="true"
+        app:titleTextColor="?attr/colorOnPrimary"
+        app:titleTextAppearance="?attr/textAppearanceTitleLarge" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/statsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stats will appear here"
+            android:textSize="16sp"
+            android:paddingBottom="12dp" />
+
+        <TextView
+            android:id="@+id/lastWorkoutText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Last workout info"
+            android:textSize="16sp"
+            android:paddingBottom="24dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/startWorkoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Workout" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
