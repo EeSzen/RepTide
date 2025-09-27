@@ -1,10 +1,21 @@
 <resources>
+    <!-- Normal Texts -->
     <string name="app_name">RepTide</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="workout_fragment">All Workouts</string>
+
+    <!-- Placeholder Texts -->
+    <string name="stats_text">Total Workouts: %1$d\nTotal Exercises: %2$d</string>
+
+    <string name="workout_details_title">Details: %1$s</string>
     <string name="workout_type">Type: %1$s</string>
     <string name="workout_count">%1$d Exercises</string>
-    <string name="workout_duration">%1$d Exercises</string>
+    <string name="workout_duration">%1$d Mins</string>
 
-    <string name="stats_text">Total Workouts: %1$d\nTotal Exercises: %2$d</string>
+    <string name="manage_workout">%1$s Workout</string>
+    <string name="manage_exercise">%1$s Exercise</string>
+
+    <string name="exercise_details_title">Details: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
