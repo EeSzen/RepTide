@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.eeszen.reptide.R
 import com.eeszen.reptide.databinding.FragmentWorkoutBinding
 import com.eeszen.reptide.ui.adapter.WorkoutAdapter
 import kotlinx.coroutines.flow.collect
@@ -17,10 +18,9 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 class WorkoutFragment : Fragment() {
+    private val viewModel: WorkoutViewModel by viewModels()
 
     private lateinit var binding: FragmentWorkoutBinding
-
-    private val viewModel: WorkoutViewModel by viewModels()
     private lateinit var workoutAdapter: WorkoutAdapter
 
     override fun onCreateView(
@@ -45,12 +45,32 @@ class WorkoutFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        binding.run {
+            // Recycler View
+            rvWorkouts.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = workoutAdapter
+            }
 
-        binding.recyclerViewWorkouts.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = workoutAdapter
+            // Submit button
+            mbSubmit.setOnClickListener {
+                val action = WorkoutFragmentDirections.actionWorkoutFragmentToAddWorkoutFragment()
+                findNavController().navigate(action)
+            }
+
+            // toolbar
+            toolbarTitle.text = getString(R.string.workout_fragment)
+            toolbar.setNavigationOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getWorkouts()  // fetch from repo again
+    }
+
 
     private fun observeWorkouts() {
         viewLifecycleOwner.lifecycleScope.launch {

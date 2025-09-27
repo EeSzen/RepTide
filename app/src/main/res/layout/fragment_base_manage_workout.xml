@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".ui.manageWorkout.BaseManageWorkoutFragment">
+
+    <!--  ToolBar (Header)  -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar"
+        android:background="?attr/colorPrimary"
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="?attr/colorOnPrimary">
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|start"
+            android:text="ADD/UPDATE"
+            android:textSize="@dimen/tx_xxl"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnPrimary"/>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <!--  Edit Text ll block  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/xl"
+        android:orientation="vertical">
+
+        <!--    Name    -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textSize="@dimen/tx_xl"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/s"
+            android:background="@drawable/edit_text_background"
+            android:hint="Enter Workout Name"
+            android:padding="@dimen/xs"
+            android:inputType="textMultiLine"
+            android:maxLines="2"
+            android:scrollbars="vertical"/>
+
+        <!--    Workout Type    -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Type"
+            android:textSize="@dimen/tx_xl"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/xxxl"/>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            app:singleLine="true"
+            android:layout_marginTop="@dimen/xxs"
+            app:chipSpacing="@dimen/s"/>
+
+        <!--    Exercises    -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exercises"
+            android:textSize="@dimen/tx_xl"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/xxxl"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAllExercises"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <!--  Submit button  -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/xl"
+        android:paddingTop="@dimen/xl"
+        android:paddingBottom="@dimen/xl"
+        android:text="Submit"
+        app:cornerRadius="@dimen/s"/>
+
+</LinearLayout>

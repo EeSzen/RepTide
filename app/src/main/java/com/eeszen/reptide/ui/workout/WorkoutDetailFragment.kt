@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.eeszen.reptide.R
 import com.eeszen.reptide.databinding.FragmentWorkoutDetailBinding
 import com.eeszen.reptide.ui.adapter.ExerciseAdapter
 
@@ -38,8 +40,16 @@ class WorkoutDetailFragment : Fragment() {
             tvExerciseCount.text = "${workout.exercises.size} Exercises"
             tvWorkoutDuration.text = "Duration: ${workout.duration} mins"
 
-            rvExercises.layoutManager = LinearLayoutManager(requireContext())
-            rvExercises.adapter = ExerciseAdapter(workout.exercises)
+            rvExercises.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = ExerciseAdapter(workout.exercises)
+            }
+
+            // toolbar
+            toolbarTitle.text = getString(R.string.workout_details_title,workout.name)
+            toolbar.setNavigationOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 }

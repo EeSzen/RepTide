@@ -3,32 +3,49 @@ package com.eeszen.reptide.data.repo
 import com.eeszen.reptide.data.model.Exercise
 import com.eeszen.reptide.data.model.Workout
 import com.eeszen.reptide.data.model.WorkoutType
+import com.eeszen.reptide.data.model.logs.WorkoutLog
 
 class WorkoutRepo private constructor(){
     val workouts : MutableMap<Int,Workout> = mutableMapOf()
+    val workoutLogs: MutableMap<Int, WorkoutLog> = mutableMapOf()    // Workout Log
+
     var counter = 0
+    var logCounter = 0    // Workout Log
 
     init {
         seedData()
     }
 
 
+    // --- Workouts (template) --- //
     fun addWorkout(workout: Workout){
         counter++
         workouts[counter] = workout.copy(id=counter)
     }
 
     fun getWorkout(id:Int) = workouts[id]
-
     fun updateWorkout(workout: Workout){
         workouts[workout.id!!] = workout
     }
 
     fun getAllWorkouts() = workouts.values.toList()
-
     fun deleteWorkout(id:Int){
         workouts.remove(id)
     }
+    // --- Workouts (template) --- //
+
+
+
+    // --- Workout Logs (history) --- //
+    fun addWorkoutLog(log: WorkoutLog) {
+        logCounter++
+        workoutLogs[logCounter] = log.copy(id = logCounter)
+    }
+    fun getWorkoutLog(id: Int) = workoutLogs[id]
+    fun getAllWorkoutLogs() = workoutLogs.values.toList()
+    fun getLastWorkoutLog(): WorkoutLog? = workoutLogs.values.lastOrNull()
+    // --- Workout Logs (history) --- //
+
 
     companion object{
         private var instance: WorkoutRepo? = null
@@ -42,7 +59,6 @@ class WorkoutRepo private constructor(){
     }
 
     // fake data test //
-    // --- Fake seed data for UI testing ---
     private fun seedData() {
         val workout1 = Workout(
             id = 0,
@@ -68,8 +84,22 @@ class WorkoutRepo private constructor(){
             )
         )
 
+        val workout3 = Workout(
+            id = 0,
+            name = "ngfchtryh",
+            type = WorkoutType.PULL,
+            exercises = listOf(
+                Exercise(0, "gg", 4, 6, WorkoutType.PULL),
+                Exercise(0, "gg", 3, 8, WorkoutType.PULL),
+                Exercise(0, "gg", 3, 10, WorkoutType.PULL),
+                Exercise(0, "rrrr", 3, 12, WorkoutType.PULL),
+                Exercise(0, "uuuuuu", 3, 12, WorkoutType.PULL)
+            )
+        )
+
         addWorkout(workout1)
         addWorkout(workout2)
+        addWorkout(workout3)
     }
     // fake data test //
 }
