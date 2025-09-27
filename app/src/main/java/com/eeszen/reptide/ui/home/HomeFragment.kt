@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.eeszen.reptide.R
 import com.eeszen.reptide.databinding.FragmentHomeBinding
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -28,18 +31,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Show stats
-        binding.statsText.text = getString(
-            R.string.stats_text,
-            viewModel.totalWorkouts,
-            viewModel.totalExercises
-        )
-
-
-        // Show last workout
-        binding.lastWorkoutText.text = viewModel.lastWorkout?.let {
-            "Last Workout: ${it.name}"
-        } ?: "No workouts yet"
+        lifecycleScope.launch {
+            viewModel.totalWorkouts.collectLatest { updateStats() }
+        }
+        lifecycleScope.launch {
+            viewModel.totalExercises.collectLatest { updateStats() }
+        }
+        lifecycleScope.launch {
+            viewModel.lastWorkout.collectLatest { updateStats() }
+        }
 
         // Button -> Go to workout list
         binding.startWorkoutButton.setOnClickListener {
@@ -47,4 +47,25 @@ class HomeFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
+
+    fun updateStats(){
+        binding.run {
+            // Show stats
+            statsText.text = getString(
+                R.string.stats_text,
+                viewModel.totalWorkouts.value,
+                viewModel.totalExercises.value
+            )
+
+            lastWorkoutText.text = viewModel.lastWorkout.value?.let {
+                "Last Workout: ${it.name}"
+            } ?: "No workouts yet"
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshStats()
+    }
+
 }
