@@ -7,7 +7,9 @@ import com.eeszen.reptide.data.model.Exercise
 import com.eeszen.reptide.databinding.LayoutItemExerciseBinding
 
 class ExerciseAdapter(
-    private var exercises: List<Exercise>
+    private var exercises: List<Exercise>,
+    private val onCheckedChange: ((Exercise, Boolean) -> Unit)? = null,
+    private val onClick: ((Exercise) -> Unit)? = null
 ) : RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
@@ -27,13 +29,35 @@ class ExerciseAdapter(
         notifyDataSetChanged()
     }
 
+    fun getSelectedExercises(): List<Exercise> {
+        return exercises.filter { it.isSelected }
+    }
+
     inner class ExerciseViewHolder(
         private val binding: LayoutItemExerciseBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(exercise: Exercise) {
-            binding.tvExerciseName.text = exercise.name
-            binding.tvExerciseInfo.text =
-                "Reps: ${exercise.reps} | Sets: ${exercise.sets}"
+            binding.run {
+                tvExerciseName.text = exercise.name
+                tvExerciseInfo.text =
+                    if (exercise.duration != null && exercise.duration > 0) {
+                        "Duration: ${exercise.duration / 60} min"
+                    } else {
+                        "Reps: ${exercise.reps} | Sets: ${exercise.sets}"
+                    }
+
+                cbSelect.isChecked = exercise.isSelected
+
+                cbSelect.setOnCheckedChangeListener { _, isChecked ->
+                    exercise.isSelected = isChecked
+                    onCheckedChange?.let { it(exercise, isChecked) }
+                }
+
+                cvExercise.setOnClickListener {
+                    onClick?.let { it(exercise) }
+                }
+            }
         }
     }
 }
