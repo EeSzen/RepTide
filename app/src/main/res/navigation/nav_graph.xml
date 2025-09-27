@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_homeFragment_to_workoutFragment"
             app:destination="@id/workoutFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_exerciseFragment"
+            app:destination="@id/exerciseFragment" />
     </fragment>
 
     <!-- Workout List Screen -->
@@ -25,6 +28,9 @@
         <action
             android:id="@+id/action_workoutFragment_to_workoutDetailFragment"
             app:destination="@id/workoutDetailFragment" />
+        <action
+            android:id="@+id/action_workoutFragment_to_addWorkoutFragment"
+            app:destination="@id/addWorkoutFragment" />
     </fragment>
 
     <!-- Workout Detail Screen -->
@@ -35,6 +41,41 @@
         tools:layout="@layout/fragment_workout_detail">
         <argument
             android:name="workoutId"
+            app:argType="integer" />
+    </fragment>
+
+    <!--  Add Workout Fragment  -->
+    <fragment
+        android:id="@+id/addWorkoutFragment"
+        android:name="com.eeszen.reptide.ui.manageWorkout.AddWorkoutFragment"
+        android:label="AddWorkoutFragment"
+        tools:layout="@layout/fragment_base_manage_workout"/>
+
+    <!--  Add Exercise Fragment  -->
+    <fragment
+        android:id="@+id/addExerciseFragment"
+        android:name="com.eeszen.reptide.ui.manageExercise.AddExerciseFragment"
+        android:label="AddExerciseFragment"
+        tools:layout="@layout/fragment_base_manage_exercise"/>
+    <fragment
+        android:id="@+id/exerciseFragment"
+        android:name="com.eeszen.reptide.ui.exercise.ExerciseFragment"
+        android:label="fragment_exercise"
+        tools:layout="@layout/fragment_exercise" >
+        <action
+            android:id="@+id/action_exerciseFragment_to_addExerciseFragment"
+            app:destination="@id/addExerciseFragment" />
+        <action
+            android:id="@+id/action_exerciseFragment_to_exerciseDetailFragment"
+            app:destination="@id/exerciseDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exerciseDetailFragment"
+        android:name="com.eeszen.reptide.ui.exercise.ExerciseDetailFragment"
+        android:label="fragment_exercise_detail"
+        tools:layout="@layout/fragment_exercise_detail" >
+        <argument
+            android:name="exerciseId"
             app:argType="integer" />
     </fragment>
 
