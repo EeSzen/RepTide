@@ -50,6 +50,16 @@ class WorkoutDetailFragment : Fragment() {
             toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
+
+            mbEditWorkout.setOnClickListener {
+                val action = WorkoutDetailFragmentDirections.actionWorkoutDetailFragmentToEditWorkoutFragment(args.workoutId)
+                findNavController().navigate(action)
+            }
+
+            mbStartWorkout.setOnClickListener {
+                val action = WorkoutDetailFragmentDirections.actionWorkoutDetailFragmentToStartWorkoutFragment(args.workoutId)
+                findNavController().navigate(action)
+            }
         }
     }
 }
