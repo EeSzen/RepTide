@@ -48,10 +48,10 @@ class WorkoutAdapter(
                     item.exercises.size
                 )
 
-//                // Show timestamp as a date
-//                val date = Date(item.timestamp)
-//                val formattedDate = DateFormat.getDateInstance().format(date)
-//                tvWorkoutDate.text = formattedDate
+                // Show timestamp as a date
+                val date = Date(item.timestamp)
+                val formattedDate = DateFormat.getDateInstance().format(date)
+                tvWorkoutDate.text = formattedDate
 
                 cvWorkout.setOnClickListener {
                     onClick(item)
