@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eeszen.reptide.R
 import com.eeszen.reptide.databinding.FragmentExerciseBinding
 import com.eeszen.reptide.ui.adapter.ExerciseAdapter
+import kotlinx.coroutines.launch
 
 
 class ExerciseFragment : Fragment() {
@@ -31,6 +33,7 @@ class ExerciseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupAdapter()
+        observeExercises()
     }
 
     private fun setupAdapter() {
@@ -47,16 +50,30 @@ class ExerciseFragment : Fragment() {
                 adapter = exerciseAdapter
             }
 
-            // Submit button
-            mbSubmit.setOnClickListener {
+            // Fab Add button
+            fabAddExercise.setOnClickListener {
                 val action = ExerciseFragmentDirections.actionExerciseFragmentToAddExerciseFragment()
                 findNavController().navigate(action)
             }
 
             // toolbar
-            toolbarTitle.text = getString(R.string.workout_fragment)
+            toolbarTitle.text = getString(R.string.exercise_fragment)
             toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getExercises()
+    }
+
+
+    private fun observeExercises() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.exercises.collect { exercises ->
+                exerciseAdapter.setExercises(exercises)
             }
         }
     }
