@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:layout_margin="@dimen/s"
+    android:padding="@dimen/xs">
+
+    <!-- Set number -->
+    <TextView
+        android:id="@+id/tvSetNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set 1"
+        android:textStyle="bold"
+        android:layout_marginEnd="@dimen/m" />
+
+    <!-- Reps input -->
+    <EditText
+        android:id="@+id/etReps"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="Reps"
+        android:inputType="number" />
+
+    <!-- Weight input -->
+    <EditText
+        android:id="@+id/etWeight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="Weight (kg)"
+        android:inputType="numberDecimal" />
+
+    <!-- Completed checkbox -->
+    <CheckBox
+        android:id="@+id/cbComplete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/xs" />
+
+</LinearLayout>
