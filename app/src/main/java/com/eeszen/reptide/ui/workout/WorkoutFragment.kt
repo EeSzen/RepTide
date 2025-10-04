@@ -52,8 +52,8 @@ class WorkoutFragment : Fragment() {
                 adapter = workoutAdapter
             }
 
-            // Submit button
-            mbSubmit.setOnClickListener {
+            // Add Workout button
+            fabAddWorkout.setOnClickListener {
                 val action = WorkoutFragmentDirections.actionWorkoutFragmentToAddWorkoutFragment()
                 findNavController().navigate(action)
             }
@@ -63,12 +63,14 @@ class WorkoutFragment : Fragment() {
             toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
+
+
         }
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.getWorkouts()  // fetch from repo again
+        viewModel.refresh()
     }
 
 
