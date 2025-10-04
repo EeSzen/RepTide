@@ -8,6 +8,8 @@ data class WorkoutLog(
     val name: String,
     val type: WorkoutType,
     val exercises: List<ExerciseLog>,
-    val timestamp: Long = System.currentTimeMillis(),
-    val duration: Long? = null
+    val startedAt: Long = System.currentTimeMillis(),
+    var finishedAt: Long? = null,
+    val duration: Long? = null,
+    var isCompleted: Boolean = false
 )
