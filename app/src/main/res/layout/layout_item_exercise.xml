@@ -29,7 +29,9 @@
                 android:layout_height="wrap_content"
                 android:text="Push Ups"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"/>
 
             <TextView
                 android:id="@+id/tvExerciseInfo"
