@@ -24,13 +24,21 @@ class ExerciseAdapter(
         holder.bind(exercises[position])
     }
 
+    fun setPreselectedExercises(ids: List<Int>) {
+        exercises.forEach { it.isSelected = ids.contains(it.id) }
+        notifyDataSetChanged()
+    }
+
+
     fun setExercises(items: List<Exercise>) {
         exercises = items
         notifyDataSetChanged()
     }
 
     fun getSelectedExercises(): List<Exercise> {
-        return exercises.filter { it.isSelected }
+        return exercises.filter { it.isSelected }.map {
+            it.copy(isSelected = false)
+        }
     }
 
     inner class ExerciseViewHolder(
@@ -52,6 +60,8 @@ class ExerciseAdapter(
                 cbSelect.setOnCheckedChangeListener { _, isChecked ->
                     exercise.isSelected = isChecked
                     onCheckedChange?.let { it(exercise, isChecked) }
+//                    val updatedExercise = exercise.copy(isSelected = isChecked)
+//                    onCheckedChange?.let { it(updatedExercise, isChecked) }
                 }
 
                 cvExercise.setOnClickListener {
