@@ -42,8 +42,13 @@ class HomeFragment : Fragment() {
         }
 
         // Button -> Go to workout list
-        binding.startWorkoutButton.setOnClickListener {
+        binding.navigateWorkoutButton.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToWorkoutFragment()
+            findNavController().navigate(action)
+        }
+
+        binding.navigateExerciseButton.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToExerciseFragment()
             findNavController().navigate(action)
         }
     }
