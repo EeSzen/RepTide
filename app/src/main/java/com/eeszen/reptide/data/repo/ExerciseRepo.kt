@@ -22,7 +22,13 @@ class ExerciseRepo private constructor() {
         exercises[exercise.id!!] = exercise
     }
 
-    fun getAllExercises() = exercises.values.toList()
+    fun getAllExercises() : List<Exercise> {
+        val list = mutableListOf<Exercise>()
+        exercises.forEach{
+            list.add(it.value.copy())
+        }
+        return list
+    }
 
     fun getExercisesByCategory(type: WorkoutType) =
         exercises.values.filter { it.category == type }
