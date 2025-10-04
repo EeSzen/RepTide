@@ -40,12 +40,18 @@
             android:paddingBottom="24dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/startWorkoutButton"
+            android:id="@+id/navigateWorkoutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Workout" />
+            android:text="All Workout" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/navigateExerciseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Exercise"/>
+
 
     </LinearLayout>
-
 
 </LinearLayout>
