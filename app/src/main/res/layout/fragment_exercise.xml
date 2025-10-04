@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
+    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -11,6 +13,7 @@
         android:background="?attr/colorPrimary"
         app:navigationIcon="@drawable/ic_back"
         app:navigationIconTint="?attr/colorOnPrimary">
+
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="match_parent"
@@ -21,32 +24,32 @@
             android:textStyle="bold"
             android:textColor="?attr/colorOnPrimary"/>
     </com.google.android.material.appbar.MaterialToolbar>
-    <ScrollView
-        android:id="@+id/scrollView"
+
+    <!-- Main content with RecyclerView -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvExercises"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingBottom="8dp"/>
-        </LinearLayout>
-    </ScrollView>
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mbSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/l"
-        android:layout_margin="@dimen/m"
-        android:text="Submit"
-        android:textSize="@dimen/tx_xl"/>
 
+        <!-- RecyclerView fills space -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvExercises"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/xl" />
+
+        <!-- FloatingActionButton stays on top -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddExercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add"
+            android:padding="@dimen/l"
+            android:layout_margin="@dimen/xl"
+            android:layout_gravity="end|bottom"
+            app:backgroundTint="?attr/colorPrimary"
+            app:tint="?attr/colorOnPrimary"/>
+    </FrameLayout>
 
 </LinearLayout>
