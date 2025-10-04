@@ -2,6 +2,7 @@
     <!-- Normal Texts -->
     <string name="app_name">RepTide</string>
     <string name="workout_fragment">All Workouts</string>
+    <string name="exercise_fragment">All Exercises</string>
 
     <!-- Placeholder Texts -->
     <string name="stats_text">Total Workouts: %1$d\nTotal Exercises: %2$d</string>
@@ -15,6 +16,16 @@
     <string name="manage_exercise">%1$s Exercise</string>
 
     <string name="exercise_details_title">Details: %1$s</string>
+
+    <string name="update_exercise">Update Exercise: %1$s</string>
+    <string name="update_workout">Update Workout: %1$s</string>
+    <string name="exercise_sets">%1$d Sets</string>
+    <string name="exercise_reps">%1$d Reps</string>
+
+    <!--  Sets  -->
+    <string name="set_num">Set %1$d</string>
+
+    <string name="exercise_duration">Duration: %1$d</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
