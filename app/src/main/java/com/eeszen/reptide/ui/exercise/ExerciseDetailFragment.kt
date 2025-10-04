@@ -35,13 +35,18 @@ class ExerciseDetailFragment : Fragment() {
         binding.run {
             tvExerciseName.text = exercise.name
             tvExerciseCategory.text = exercise.category.toString()
-            tvExerciseSets.text = "${exercise.sets} Sets"
-            tvExerciseReps.text = "${exercise.reps} Reps"
-            tvExerciseDuration.text = exercise.duration.toString()
+            tvExerciseSets.text = getString(R.string.exercise_sets,exercise.sets)
+            tvExerciseReps.text = getString(R.string.exercise_reps,exercise.reps)
+            tvExerciseDuration.text = getString(R.string.exercise_duration,exercise.duration)
 
             toolbarTitle.text = getString(R.string.exercise_details_title,exercise.name)
             toolbar.setNavigationOnClickListener{
                 findNavController().popBackStack()
+            }
+
+            mbEditExercise.setOnClickListener {
+                val action = ExerciseDetailFragmentDirections.actionExerciseDetailFragmentToEditExerciseFragment(exerciseId)
+                findNavController().navigate(action)
             }
         }
     }
