@@ -7,7 +7,7 @@ data class ExerciseLog(
     val exerciseId: Int? = null, // reference to Exercise (template)
     val name: String,
     val category: WorkoutType,
-    val sets: List<SetLog>,
+    val sets: MutableList<SetLog>,
     val duration: Long? = null,
     var isCompleted: Boolean = false
 )
