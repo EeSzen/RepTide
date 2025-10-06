@@ -13,8 +13,7 @@ import com.eeszen.reptide.databinding.FragmentStartExercisePageBinding
 
 class StartExerciseAdapter(
     private var exercises: List<ExerciseLog>,
-    private val onPrevClick: ((Int) -> Unit)? = null,
-    private val onNextClick: ((Int) -> Unit)? = null
+    private val onExerciseUpdated: ((ExerciseLog, Int) -> Unit)? = null
 ) : RecyclerView.Adapter<StartExerciseAdapter.ExerciseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
@@ -38,15 +37,19 @@ class StartExerciseAdapter(
             binding.tvExerciseName.text = exercise.name
 
             // Sets adapter
-            binding.rvSets.layoutManager = LinearLayoutManager(binding.root.context)
-            binding.rvSets.adapter = SetAdapter(exercise.sets)
+            binding.rvSets.apply {
+                layoutManager = LinearLayoutManager(binding.root.context)
+                adapter = SetAdapter(exercise.sets) { updatedSet, index ->
+                    // updatedSet is the same object that lives in exercise.sets,
+                    // so no need to reassign it into the list.
 
-            // Navigation buttons
-            binding.btnPrev.setOnClickListener {
-                onPrevClick?.let { it(position) }
-            }
-            binding.btnNext.setOnClickListener {
-                onNextClick?.let { it(position) }
+                    // check if all sets done
+                    exercise.isCompleted = exercise.sets.all { it.completed }
+
+                    // notify parent
+                    onExerciseUpdated?.invoke(exercise, position)
+                }
+
             }
         }
     }
