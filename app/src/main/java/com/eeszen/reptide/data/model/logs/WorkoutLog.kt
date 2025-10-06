@@ -7,7 +7,7 @@ data class WorkoutLog(
     val workoutId: Int? = null, // reference to planned workout
     val name: String,
     val type: WorkoutType,
-    val exercises: List<ExerciseLog>,
+    val exercises: MutableList<ExerciseLog>,
     val startedAt: Long = System.currentTimeMillis(),
     var finishedAt: Long? = null,
     val duration: Long? = null,
