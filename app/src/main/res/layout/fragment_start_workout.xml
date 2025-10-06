@@ -46,4 +46,15 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbFinishWorkout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="Finish Workout"
+        android:layout_margin="@dimen/m"
+        android:padding="@dimen/l"/>
+
+
 </LinearLayout>
