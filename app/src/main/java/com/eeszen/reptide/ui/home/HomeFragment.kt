@@ -51,6 +51,11 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToExerciseFragment()
             findNavController().navigate(action)
         }
+
+        binding.navigateHistoryButton.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToHistoryFragment()
+            findNavController().navigate(action)
+        }
     }
 
     fun updateStats(){
