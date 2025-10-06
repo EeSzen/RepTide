@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_homeFragment_to_exerciseFragment"
             app:destination="@id/exerciseFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
 
     <!-- Workout List Screen -->
@@ -103,7 +106,7 @@
             app:argType="integer" />
     </fragment>
 
-    <!--  Edit Exercise Fragment  -->
+    <!--  Edit Workout Fragment  -->
     <fragment
         android:id="@+id/editWorkoutFragment"
         android:name="com.eeszen.reptide.ui.manageWorkout.EditWorkoutFragment"
@@ -122,7 +125,32 @@
         tools:layout="@layout/fragment_start_workout">
         <argument
             android:name="workoutId"
-            app:argType="integer" /> <!-- pass which workout is being started -->
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_startWorkoutFragment_to_historyFragment"
+            app:destination="@id/historyFragment" /> <!-- pass which workout is being started -->
+    </fragment>
+
+    <!--  History Fragment  -->
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.eeszen.reptide.ui.history.HistoryFragment"
+        android:label="HistoryFragment"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_historyFragment_to_historyDetailFragment"
+            app:destination="@id/historyDetailFragment" />
+    </fragment>
+
+    <!--  History Details Fragment  -->
+    <fragment
+        android:id="@+id/historyDetailFragment"
+        android:name="com.eeszen.reptide.ui.history.HistoryDetailFragment"
+        android:label="fragment_history_detail"
+        tools:layout="@layout/fragment_history_detail" >
+        <argument
+            android:name="historyId"
+            app:argType="integer" />
     </fragment>
 
 
