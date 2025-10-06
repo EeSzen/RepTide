@@ -44,6 +44,10 @@ class WorkoutRepo private constructor(){
     fun getWorkoutLog(id: Int) = workoutLogs[id]
     fun getAllWorkoutLogs() = workoutLogs.values.toList()
     fun getLastWorkoutLog(): WorkoutLog? = workoutLogs.values.lastOrNull()
+    fun getCompletedWorkoutLogs(): List<WorkoutLog> {
+        return workoutLogs.values.filter { it.isCompleted }
+    }
+
     // --- Workout Logs (history) --- //
 
 
