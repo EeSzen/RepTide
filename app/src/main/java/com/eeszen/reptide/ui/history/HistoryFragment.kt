@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.eeszen.reptide.R
 import com.eeszen.reptide.databinding.FragmentHistoryBinding
 import com.eeszen.reptide.ui.adapter.HistoryAdapter
 
@@ -29,12 +31,21 @@ class HistoryFragment : Fragment() {
         val completedLogs = viewModel.getCompletedWorkouts()
 
         historyAdapter = HistoryAdapter(completedLogs) { workout ->
-            // TODO: navigate to workout details later
+            val action = HistoryFragmentDirections
+                .actionHistoryFragmentToHistoryDetailFragment(workout.id ?: 0)
+            findNavController().navigate(action)
         }
 
-        binding.rvHistory.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = historyAdapter
+        binding.run {
+            rvHistory.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = historyAdapter
+            }
+
+            toolbarTitle.text = getString(R.string.history_fragment)
+            toolbar.setNavigationOnClickListener{
+                findNavController().popBackStack()
+            }
         }
     }
 }

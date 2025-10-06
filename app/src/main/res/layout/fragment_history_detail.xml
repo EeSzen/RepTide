@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar"
+        android:background="?attr/colorPrimary"
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="?attr/colorOnPrimary">
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|start"
+            android:text="DETAILS"
+            android:textSize="@dimen/tx_xxl"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnPrimary"/>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/xl">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/xl"
+            app:cardElevation="@dimen/xxxs">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/xl"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvHistoryName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Workout Name"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/tx_xxl"
+                    android:layout_marginBottom="@dimen/xs"/>
+
+                <TextView
+                    android:id="@+id/tvHistoryType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Type"
+                    android:textSize="@dimen/tx_l"
+                    android:layout_marginBottom="@dimen/xs"/>
+
+                <TextView
+                    android:id="@+id/tvHistoryDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Duration: 0 min"
+                    android:textSize="@dimen/tx_l"
+                    android:layout_marginBottom="@dimen/xs"/>
+
+                <TextView
+                    android:id="@+id/tvHistoryDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Completed: Oct 05, 2025 • 10:15 PM"
+                    android:textSize="@dimen/tx_l"
+                    android:layout_marginBottom="@dimen/xs"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/xs"
+            android:text="Exercises"
+            android:textStyle="bold"
+            android:textSize="@dimen/tx_xl"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHistoryExercises"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>

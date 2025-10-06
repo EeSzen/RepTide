@@ -42,7 +42,7 @@ class StartWorkoutFragment : Fragment() {
 
         val workoutId = args.workoutId
         val workout = viewModel.getWorkoutById(workoutId) ?: return
-        val workoutLog = workout.toWorkoutLog()  // convert
+        val workoutLog = workout.toWorkoutLog()
 
         binding.run {
             toolbarTitle.text = workout.name
@@ -87,20 +87,42 @@ class StartWorkoutFragment : Fragment() {
     }
 
     // Mapper Function (convert Exercise to ExerciseLog)
+//    fun Exercise.toExerciseLog(): ExerciseLog {
+//        return ExerciseLog(
+//            id = this.id,
+//            exerciseId = this.id,
+//            name = name,
+//            category = category,
+//            sets = (1..sets).map { setNum ->
+//                SetLog(
+//                    setNumber = setNum,
+//                    plannedReps = reps,
+//                    plannedWeight = 0.0
+//                )
+//            }.toMutableList()
+//        )
+//    }
     fun Exercise.toExerciseLog(): ExerciseLog {
         return ExerciseLog(
-            exerciseId = id,
+            id = this.id, // new log entry
+            exerciseId = this.id, // KEEP the link to base exercise
             name = name,
             category = category,
-            sets = (1..sets).map { setNum ->
+            sets = MutableList(sets) { index ->
                 SetLog(
-                    setNumber = setNum,
+                    setNumber = index + 1,
                     plannedReps = reps,
-                    plannedWeight = 0.0 // default for now
+                    plannedWeight = 0.0,
+                    actualReps = null,
+                    actualWeight = null
                 )
-            }
+            },
+            duration = null,
+            isCompleted = false
         )
     }
+
+
 
     // Mapper Function (convert Workout to WorkoutLog)
     fun Workout.toWorkoutLog(): WorkoutLog {

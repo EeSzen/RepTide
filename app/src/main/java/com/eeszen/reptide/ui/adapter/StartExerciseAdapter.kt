@@ -39,14 +39,14 @@ class StartExerciseAdapter(
             // Sets adapter
             binding.rvSets.apply {
                 layoutManager = LinearLayoutManager(binding.root.context)
-                adapter = SetAdapter(exercise.sets) { updatedSet, index ->
-                    // updatedSet is the same object that lives in exercise.sets,
-                    // so no need to reassign it into the list.
+                adapter = SetAdapter(exercise.sets) { updatedSet, setIndex ->
+                    // Replace the set in the list with the updated one
+                    exercise.sets[setIndex] = updatedSet
 
-                    // check if all sets done
+                    // Recalculate completion
                     exercise.isCompleted = exercise.sets.all { it.completed }
 
-                    // notify parent
+                    // Notify parent (StartWorkoutFragment)
                     onExerciseUpdated?.invoke(exercise, position)
                 }
 

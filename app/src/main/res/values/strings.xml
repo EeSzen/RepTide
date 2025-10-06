@@ -3,6 +3,7 @@
     <string name="app_name">RepTide</string>
     <string name="workout_fragment">All Workouts</string>
     <string name="exercise_fragment">All Exercises</string>
+    <string name="history_fragment">All History</string>
 
     <!-- Placeholder Texts -->
     <string name="stats_text">Total Workouts: %1$d\nTotal Exercises: %2$d</string>
@@ -16,6 +17,7 @@
     <string name="manage_exercise">%1$s Exercise</string>
 
     <string name="exercise_details_title">Details: %1$s</string>
+    <string name="history_details_title">Details: %1$s</string>
 
     <string name="update_exercise">Update Exercise: %1$s</string>
     <string name="update_workout">Update Workout: %1$s</string>
