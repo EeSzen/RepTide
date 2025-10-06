@@ -8,5 +8,6 @@ data class ExerciseLog(
     val name: String,
     val category: WorkoutType,
     val sets: List<SetLog>,
-    val duration: Long? = null
+    val duration: Long? = null,
+    var isCompleted: Boolean = false
 )
