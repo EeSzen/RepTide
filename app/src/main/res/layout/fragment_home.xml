@@ -51,6 +51,12 @@
             android:layout_height="wrap_content"
             android:text="All Exercise"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/navigateHistoryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="History"/>
+
 
     </LinearLayout>
 
