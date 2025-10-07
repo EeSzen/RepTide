@@ -1,63 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".ui.home.HomeFragment">
+    android:background="@color/black">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <!-- Scrollable Content -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:title="Placeholder"
-        app:titleCentered="true"
-        app:titleTextColor="?attr/colorOnPrimary"
-        app:titleTextAppearance="?attr/textAppearanceTitleLarge" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="@dimen/xl"
+        android:paddingTop="@dimen/xxxl"
+        android:scrollbars="none"
+        android:clipToPadding="false">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/statsText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Stats will appear here"
-            android:textSize="16sp"
-            android:paddingBottom="12dp" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:dividerPadding="@dimen/m">
 
-        <TextView
-            android:id="@+id/lastWorkoutText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Last workout info"
-            android:textSize="16sp"
-            android:paddingBottom="24dp" />
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textSize="@dimen/tx_xxxxl"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/xxl" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/navigateWorkoutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="All Workout" />
+            <!-- Row 1: Workout summary + Weight -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/m">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/navigateExerciseButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="All Exercise"/>
+                <!-- Workout summary card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/xxs"
+                    android:padding="@dimen/xl"
+                    app:cardBackgroundColor="@color/dark_gray"
+                    app:cardCornerRadius="@dimen/xxl"
+                    app:cardElevation="0dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/navigateHistoryButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="History"/>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:padding="@dimen/xl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvHomeWorkoutType"
+                            android:text="@string/type_placeholder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/tx_xxxxl"
+                            android:textStyle="bold"
+                            android:textColor="@color/orange" />
+
+                        <TextView
+                            android:text="@string/last_category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/tx_l"
+                            android:textColor="@color/grey" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Weight card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/xxs"
+                    android:padding="@dimen/xl"
+                    app:cardBackgroundColor="@color/dark_gray"
+                    app:cardCornerRadius="@dimen/xxl"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/xl"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tvHomePR"
+                            android:text="@string/pr_placeholder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/tx_xxxxl"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnPrimaryContainer" />
+
+                        <TextView
+                            android:text="@string/kgs_pr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/tx_l"
+                            android:textColor="@color/grey" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Volume lifted -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/xl"
+                app:cardBackgroundColor="@color/dark_gray"
+                app:cardCornerRadius="@dimen/xxl"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/xl"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="@string/volume_lifted_7_days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/tx_l"
+                        android:textColor="@color/grey"
+                        android:layout_marginBottom="@dimen/xxxs" />
+
+                    <TextView
+                        android:id="@+id/tvHomeVolumeLifted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total_volume_lifted"
+                        android:textSize="@dimen/tx_xxxl"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorOnPrimaryContainer" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Weight Progress Graph -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/m"
+                app:cardBackgroundColor="@color/dark_gray"
+                app:cardCornerRadius="@dimen/xxl"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/xl">
+
+                    <TextView
+                        android:text="@string/weight_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/tx_l"
+                        android:layout_marginBottom="@dimen/xxs" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/weightLineChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginBottom="@dimen/xs" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
 
-    </LinearLayout>
+            <!-- Start Workout -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/m"
+                android:layout_marginBottom="@dimen/xxxxl"
+                app:cardBackgroundColor="@color/dark_gray"
+                app:cardCornerRadius="@dimen/xxl"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/xl">
+
+                    <TextView
+                        android:text="@string/start_workout_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/tx_l"
+                        android:layout_marginBottom="@dimen/xxs" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/navigateWorkoutFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cornerRadius="@dimen/m"
+                        android:text="@string/start"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

@@ -41,7 +41,7 @@ class HistoryAdapter(
             binding.tvCompletionDate.text = formatDate(workout.finishedAt)
 
             binding.root.setOnClickListener {
-                onWorkoutClick?.invoke(workout)
+                onWorkoutClick?.let{it(workout)}
             }
         }
     }
