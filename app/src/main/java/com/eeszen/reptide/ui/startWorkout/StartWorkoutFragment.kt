@@ -1,6 +1,7 @@
 package com.eeszen.reptide.ui.startWorkout
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.eeszen.reptide.MainActivity
 import com.eeszen.reptide.R
 import com.eeszen.reptide.data.model.Exercise
 import com.eeszen.reptide.data.model.Workout
@@ -46,12 +48,11 @@ class StartWorkoutFragment : Fragment() {
 
         binding.run {
             toolbarTitle.text = workout.name
-            toolbar.setNavigationOnClickListener {
+            ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 
 //            // Setup ViewPager with adapter
-//            startExerciseAdapter = StartExerciseAdapter(workoutLog.exercises)
             startExerciseAdapter = StartExerciseAdapter(workoutLog.exercises) { updatedExercise, index ->
                 workoutLog.exercises[index] = updatedExercise
             }
@@ -71,8 +72,7 @@ class StartWorkoutFragment : Fragment() {
                     workoutLog.finishedAt = System.currentTimeMillis()
                     WorkoutRepo.getInstance().addWorkoutLog(workoutLog)
 
-                    val action = StartWorkoutFragmentDirections.actionStartWorkoutFragmentToHistoryFragment()
-                    findNavController().navigate(action)
+                    (requireActivity() as MainActivity).selectBottomNavItem(R.id.historyFragment)
                 } else {
                     showError("Finish all exercises first!")
                 }
@@ -104,8 +104,9 @@ class StartWorkoutFragment : Fragment() {
 //    }
     fun Exercise.toExerciseLog(): ExerciseLog {
         return ExerciseLog(
-            id = this.id, // new log entry
-            exerciseId = this.id, // KEEP the link to base exercise
+//            id = null,
+            id = (System.currentTimeMillis() + this.id.hashCode()).toInt(), // before room
+            exerciseId = this.id,
             name = name,
             category = category,
             sets = MutableList(sets) { index ->

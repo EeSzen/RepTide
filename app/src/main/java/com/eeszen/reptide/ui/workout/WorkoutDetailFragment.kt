@@ -47,7 +47,7 @@ class WorkoutDetailFragment : Fragment() {
 
             // toolbar
             toolbarTitle.text = getString(R.string.workout_details_title,workout.name)
-            toolbar.setNavigationOnClickListener {
+            ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 
