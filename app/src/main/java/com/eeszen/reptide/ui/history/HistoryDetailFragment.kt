@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.eeszen.reptide.R
-import com.eeszen.reptide.data.repo.WorkoutRepo
 import com.eeszen.reptide.databinding.FragmentHistoryDetailBinding
 import com.eeszen.reptide.ui.adapter.ExerciseHistoryAdapter
 import java.text.SimpleDateFormat
@@ -56,7 +55,7 @@ class HistoryDetailFragment : Fragment() {
             tvHistoryDuration.text = getString(R.string.workout_duration,durationMinutes)
 
             toolbarTitle.text = getString(R.string.history_details_title,history.name)
-            toolbar.setNavigationOnClickListener{
+            ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
         }
@@ -72,7 +71,7 @@ class HistoryDetailFragment : Fragment() {
     // date time convertor
     private fun formatDate(timestamp: Long?): String {
         if (timestamp == null) return "Unknown date"
-        val sdf = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat("MMM dd, yyyy - hh:mm a", Locale.getDefault())
         return sdf.format(Date(timestamp))
     }
 }

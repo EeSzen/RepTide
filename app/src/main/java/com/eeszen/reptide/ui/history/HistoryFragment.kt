@@ -41,11 +41,6 @@ class HistoryFragment : Fragment() {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = historyAdapter
             }
-
-            toolbarTitle.text = getString(R.string.history_fragment)
-            toolbar.setNavigationOnClickListener{
-                findNavController().popBackStack()
-            }
         }
     }
 }

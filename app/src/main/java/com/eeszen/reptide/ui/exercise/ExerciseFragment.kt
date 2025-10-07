@@ -56,11 +56,6 @@ class ExerciseFragment : Fragment() {
                 findNavController().navigate(action)
             }
 
-            // toolbar
-            toolbarTitle.text = getString(R.string.exercise_fragment)
-            toolbar.setNavigationOnClickListener {
-                findNavController().popBackStack()
-            }
         }
     }
 

@@ -27,7 +27,7 @@ class AddExerciseFragment : BaseManageExerciseFragment() {
         binding.run {
             // toolbar
             toolbarTitle.text = getString(R.string.manage_exercise,"Add New")
-            toolbar.setNavigationOnClickListener {
+            ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 

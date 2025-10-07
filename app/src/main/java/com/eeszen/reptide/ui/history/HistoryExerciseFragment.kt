@@ -44,7 +44,9 @@ class HistoryExerciseFragment : Fragment() {
             tvExerciseDuration.text = "Duration: ${exercise.duration ?: 0} min"
 
 
-            toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
+            ivBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
 
             rvExerciseSets.apply {
                 layoutManager = LinearLayoutManager(requireContext())

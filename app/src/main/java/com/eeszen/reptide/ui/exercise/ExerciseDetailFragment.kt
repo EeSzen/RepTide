@@ -40,7 +40,7 @@ class ExerciseDetailFragment : Fragment() {
             tvExerciseDuration.text = getString(R.string.exercise_duration,exercise.duration)
 
             toolbarTitle.text = getString(R.string.exercise_details_title,exercise.name)
-            toolbar.setNavigationOnClickListener{
+            ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
 

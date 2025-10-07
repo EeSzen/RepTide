@@ -29,7 +29,7 @@ class EditExerciseFragment : BaseManageExerciseFragment() {
                 exercise?.let {
                     binding.run {
                         toolbarTitle.text = getString(R.string.update_exercise,it.name)
-                        toolbar.setNavigationOnClickListener {
+                        ivBack.setOnClickListener {
                             findNavController().popBackStack()
                         }
 

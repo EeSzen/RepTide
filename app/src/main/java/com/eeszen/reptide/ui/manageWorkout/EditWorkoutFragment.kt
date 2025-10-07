@@ -35,7 +35,7 @@ class EditWorkoutFragment : BaseManageWorkoutFragment() {
                 workout?.let {
                     binding.run {
                         toolbarTitle.text = getString(R.string.update_workout,it.name)
-                        toolbar.setNavigationOnClickListener {
+                        ivBack.setOnClickListener {
                             findNavController().popBackStack()
                         }
 
