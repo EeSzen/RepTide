@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardBackgroundColor="?attr/colorPrimaryContainer"
-    app:cardCornerRadius="12dp"
+    android:layout_margin="@dimen/xs"
+    app:cardBackgroundColor="@color/dark_gray"
+    app:cardCornerRadius="@dimen/l"
     android:id="@+id/cvExercise"
-    app:cardElevation="4dp">
+    app:cardElevation="@dimen/xs">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="12dp"
+        android:padding="@dimen/xl"
         android:gravity="center_vertical">
 
         <!-- Left side (Exercise info) -->
@@ -27,9 +27,10 @@
                 android:id="@+id/tvExerciseName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Push Ups"
-                android:textSize="18sp"
+                android:text="@string/workout_placeholder"
+                android:textSize="@dimen/tx_xxxl"
                 android:textStyle="bold"
+                android:textColor="@color/orange"
                 android:maxLines="1"
                 android:ellipsize="end"/>
 
@@ -37,8 +38,8 @@
                 android:id="@+id/tvExerciseInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reps: 12 | Sets: 3"
-                android:textSize="14sp" />
+                android:text="@string/exercise_group_placeholder"
+                android:textSize="@dimen/tx_m" />
         </LinearLayout>
 
         <!-- CheckBox-->

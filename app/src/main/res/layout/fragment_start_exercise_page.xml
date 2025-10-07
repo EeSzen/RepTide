@@ -4,17 +4,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="@dimen/xl">
 
     <!-- Exercise Title -->
     <TextView
         android:id="@+id/tvExerciseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bench Press"
-        android:textSize="20sp"
+        android:text="@string/exercise_placeholder"
+        android:textSize="@dimen/tx_xxl"
         android:textStyle="bold"
-        android:layout_marginBottom="12dp" />
+        android:layout_marginBottom="@dimen/l" />
 
     <!-- Sets RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
@@ -23,6 +23,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:paddingBottom="8dp" />
+        android:paddingBottom="@dimen/xs" />
 
 </LinearLayout>

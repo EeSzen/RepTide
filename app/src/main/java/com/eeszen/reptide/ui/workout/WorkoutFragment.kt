@@ -57,14 +57,6 @@ class WorkoutFragment : Fragment() {
                 val action = WorkoutFragmentDirections.actionWorkoutFragmentToAddWorkoutFragment()
                 findNavController().navigate(action)
             }
-
-            // toolbar
-            toolbarTitle.text = getString(R.string.workout_fragment)
-            toolbar.setNavigationOnClickListener {
-                findNavController().popBackStack()
-            }
-
-
         }
     }
 

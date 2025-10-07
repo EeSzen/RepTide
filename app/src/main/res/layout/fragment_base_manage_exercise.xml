@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.manageWorkout.BaseManageWorkoutFragment">
 
     <!--  ToolBar (Header)  -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar"
-        android:background="?attr/colorPrimary"
-        app:navigationIcon="@drawable/ic_back"
-        app:navigationIconTint="?attr/colorOnPrimary">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:layout_margin="@dimen/m"
+            app:tint="@color/white" />
+
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|start"
-            android:text="ADD/UPDATE"
-            android:textSize="@dimen/tx_xxl"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/add_edit"
+            android:textColor="@color/white"
             android:textStyle="bold"
-            android:textColor="?attr/colorOnPrimary"/>
-    </com.google.android.material.appbar.MaterialToolbar>
+            android:layout_margin="@dimen/m"
+            android:textSize="@dimen/tx_xxxxl" />
+    </LinearLayout>
 
     <!--  Edit Text ll block  -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="@dimen/xl"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/xl">
 
         <!--    Name    -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="@string/name"
             android:textSize="@dimen/tx_xl"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/etName"
@@ -48,38 +55,39 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/s"
             android:background="@drawable/edit_text_background"
-            android:hint="Enter Exercise Name"
-            android:padding="@dimen/xs"
+            android:hint="@string/enter_exercise_name"
             android:inputType="textMultiLine"
             android:maxLines="2"
-            android:scrollbars="vertical"/>
+            android:padding="@dimen/xs"
+            android:scrollbars="vertical" />
 
         <!--    Exercise Category    -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Category"
+            android:layout_marginTop="@dimen/xxxl"
+            android:text="@string/category"
             android:textSize="@dimen/tx_xl"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/xxxl"/>
+            android:textStyle="bold" />
+
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:singleSelection="true"
-            app:singleLine="true"
             android:layout_marginTop="@dimen/xxs"
-            app:chipSpacing="@dimen/s"/>
+            app:chipSpacing="@dimen/s"
+            app:singleLine="true"
+            app:singleSelection="true"/>
 
         <!--    Sets    -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sets"
+            android:layout_marginTop="@dimen/xxxl"
+            android:text="@string/sets"
             android:textSize="@dimen/tx_xl"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/xxxl"/>
+            android:textStyle="bold" />
 
         <NumberPicker
             android:id="@+id/npSets"
@@ -91,10 +99,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Reps"
+            android:layout_marginTop="@dimen/xxxl"
+            android:text="@string/reps"
             android:textSize="@dimen/tx_xl"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/xxxl"/>
+            android:textStyle="bold" />
 
         <NumberPicker
             android:id="@+id/npReps"
@@ -111,7 +119,7 @@
         android:layout_margin="@dimen/xl"
         android:paddingTop="@dimen/xl"
         android:paddingBottom="@dimen/xl"
-        android:text="Submit"
-        app:cornerRadius="@dimen/s"/>
+        android:text="@string/submit"
+        app:cornerRadius="@dimen/s" />
 
 </LinearLayout>

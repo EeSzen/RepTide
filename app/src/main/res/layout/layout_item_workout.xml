@@ -5,24 +5,24 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:id="@+id/cvWorkout"
-    app:cardBackgroundColor="?attr/colorPrimaryContainer"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    app:cardBackgroundColor="@color/dark_gray"
+    app:cardCornerRadius="@dimen/xxl"
+    app:cardElevation="@dimen/xxxs">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="@dimen/xl">
 
         <!-- Workout Name -->
         <TextView
             android:id="@+id/tvWorkoutName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.Material3.TitleMedium"
-            android:text="Push Day"
-            android:textColor="?attr/colorOnPrimaryContainer"
+            android:text="@string/workout_placeholder"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/tx_xxxl"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end" />
@@ -32,25 +32,25 @@
             android:id="@+id/tvWorkoutType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.Material3.BodyMedium"
-            android:text="Type: PUSH"
+            android:textSize="@dimen/tx_l"
+            android:text="@string/workout_type"
             android:textColor="?attr/colorOnPrimaryContainer"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="@dimen/xxxs" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="2dp">
+            android:layout_marginTop="@dimen/xxxxs">
             <!-- Exercise count -->
             <TextView
                 android:id="@+id/tvExerciseCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextAppearance.Material3.BodySmall"
-                android:text="4 Exercises"
+                android:textSize="@dimen/tx_s"
+                android:text="@string/placeholder_exercises_count"
                 android:textColor="?attr/colorOnPrimaryContainer"
-                android:layout_marginTop="2dp" />
+                android:layout_marginTop="@dimen/xxxxs" />
 
             <View
                 android:layout_width="0dp"
@@ -62,10 +62,10 @@
                 android:id="@+id/tvWorkoutDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextAppearance.Material3.BodySmall"
-                android:text="21 Sept 2025"
+                android:textSize="@dimen/tx_s"
+                android:text="@string/placeholder_date"
                 android:textColor="?attr/colorOnPrimaryContainer"
-                android:layout_marginTop="2dp" />
+                android:layout_marginTop="@dimen/xxxxs" />
         </LinearLayout>
 
 
