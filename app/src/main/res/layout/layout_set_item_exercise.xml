@@ -1,0 +1,77 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:layout_margin="@dimen/s"
+    android:padding="@dimen/xs">
+
+    <!-- Set number -->
+    <TextView
+        android:id="@+id/tvSetNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_num"
+        android:textSize="@dimen/tx_xxl"
+        android:textStyle="bold"
+        android:layout_marginEnd="@dimen/m" />
+
+    <!-- Reps -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:text="@string/reps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/tx_s"
+            android:textColor="@color/grey"
+            android:layout_marginBottom="@dimen/xxxxs"/>
+
+        <EditText
+            android:id="@+id/etReps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:padding="@dimen/xs"
+            android:hint="@string/placeholder_10"
+            android:inputType="number"/>
+    </LinearLayout>
+
+    <!-- Weight -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="@dimen/s">
+
+        <TextView
+            android:text="@string/weight_kg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/tx_s"
+            android:textColor="@color/grey"
+            android:layout_marginBottom="@dimen/xxxxs"/>
+
+        <EditText
+            android:id="@+id/etWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_background"
+            android:padding="@dimen/xs"
+            android:hint="@string/placeholder_50"
+            android:inputType="numberDecimal"/>
+    </LinearLayout>
+
+    <!-- Completed checkbox -->
+    <CheckBox
+        android:id="@+id/cbComplete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/xs" />
+</LinearLayout>

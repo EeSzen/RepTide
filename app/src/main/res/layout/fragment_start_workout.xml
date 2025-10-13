@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".ui.startWorkout.StartWorkoutFragment">
+
+    <!-- Toolbar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:layout_margin="@dimen/m"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/start_workout_button"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_margin="@dimen/m"
+            android:textSize="@dimen/tx_xxxxl" />
+    </LinearLayout>
+
+    <!-- Top Chip navigation for exercises -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupExercises"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        app:chipSpacingHorizontal="4dp"
+        app:chipSpacingVertical="4dp"
+        android:scrollbars="horizontal" />
+
+    <!-- ViewPager2 for exercises -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerExercises"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbFinishWorkout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="@string/finish_workout_button"
+        android:layout_margin="@dimen/m"
+        android:padding="@dimen/l"/>
+
+
+</LinearLayout>

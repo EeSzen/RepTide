@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <!-- Home Screen -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.eeszen.reptide.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_workoutFragment"
+            app:destination="@id/workoutFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_exerciseFragment"
+            app:destination="@id/exerciseFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
+
+    <!-- Workout List Screen -->
+    <fragment
+        android:id="@+id/workoutFragment"
+        android:name="com.eeszen.reptide.ui.workout.WorkoutFragment"
+        android:label="Workouts"
+        tools:layout="@layout/fragment_workout">
+        <action
+            android:id="@+id/action_workoutFragment_to_workoutDetailFragment"
+            app:destination="@id/workoutDetailFragment" />
+        <action
+            android:id="@+id/action_workoutFragment_to_addWorkoutFragment"
+            app:destination="@id/addWorkoutFragment" />
+    </fragment>
+
+    <!-- Workout Detail Screen -->
+    <fragment
+        android:id="@+id/workoutDetailFragment"
+        android:name="com.eeszen.reptide.ui.workout.WorkoutDetailFragment"
+        android:label="Workout Detail"
+        tools:layout="@layout/fragment_workout_detail">
+        <argument
+            android:name="workoutId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_workoutDetailFragment_to_editWorkoutFragment"
+            app:destination="@id/editWorkoutFragment" />
+        <action
+            android:id="@+id/action_workoutDetailFragment_to_startWorkoutFragment"
+            app:destination="@id/startWorkoutFragment" />
+    </fragment>
+
+    <!--  Add Workout Fragment  -->
+    <fragment
+        android:id="@+id/addWorkoutFragment"
+        android:name="com.eeszen.reptide.ui.manageWorkout.AddWorkoutFragment"
+        android:label="AddWorkoutFragment"
+        tools:layout="@layout/fragment_base_manage_workout"/>
+
+    <!--  Add Exercise Fragment  -->
+    <fragment
+        android:id="@+id/addExerciseFragment"
+        android:name="com.eeszen.reptide.ui.manageExercise.AddExerciseFragment"
+        android:label="AddExerciseFragment"
+        tools:layout="@layout/fragment_base_manage_exercise"/>
+
+    <!--  Exercise Fragment  -->
+    <fragment
+        android:id="@+id/exerciseFragment"
+        android:name="com.eeszen.reptide.ui.exercise.ExerciseFragment"
+        android:label="fragment_exercise"
+        tools:layout="@layout/fragment_exercise" >
+        <action
+            android:id="@+id/action_exerciseFragment_to_addExerciseFragment"
+            app:destination="@id/addExerciseFragment" />
+        <action
+            android:id="@+id/action_exerciseFragment_to_exerciseDetailFragment"
+            app:destination="@id/exerciseDetailFragment" />
+    </fragment>
+
+    <!--  Exercise Details Fragment  -->
+    <fragment
+        android:id="@+id/exerciseDetailFragment"
+        android:name="com.eeszen.reptide.ui.exercise.ExerciseDetailFragment"
+        android:label="fragment_exercise_detail"
+        tools:layout="@layout/fragment_exercise_detail" >
+        <argument
+            android:name="exerciseId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_exerciseDetailFragment_to_editExerciseFragment"
+            app:destination="@id/editExerciseFragment" />
+    </fragment>
+
+    <!--  Edit Exercise Fragment  -->
+    <fragment
+        android:id="@+id/editExerciseFragment"
+        android:name="com.eeszen.reptide.ui.manageExercise.EditExerciseFragment"
+        android:label="EditExerciseFragment"
+        tools:layout="@layout/fragment_base_manage_exercise">
+        <argument
+            android:name="exerciseId"
+            app:argType="integer" />
+    </fragment>
+
+    <!--  Edit Workout Fragment  -->
+    <fragment
+        android:id="@+id/editWorkoutFragment"
+        android:name="com.eeszen.reptide.ui.manageWorkout.EditWorkoutFragment"
+        android:label="EditWorkoutFragment"
+        tools:layout="@layout/fragment_base_manage_workout">
+        <argument
+            android:name="workoutId"
+            app:argType="integer"/>
+    </fragment>
+
+    <!--  Start Workout Fragment  -->
+    <fragment
+        android:id="@+id/startWorkoutFragment"
+        android:name="com.eeszen.reptide.ui.startWorkout.StartWorkoutFragment"
+        android:label="StartWorkoutFragment"
+        tools:layout="@layout/fragment_start_workout">
+        <argument
+            android:name="workoutId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_startWorkoutFragment_to_historyFragment"
+            app:destination="@id/historyFragment" /> <!-- pass which workout is being started -->
+    </fragment>
+
+    <!--  History Fragment  -->
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.eeszen.reptide.ui.history.HistoryFragment"
+        android:label="HistoryFragment"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_historyFragment_to_historyDetailFragment"
+            app:destination="@id/historyDetailFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <!--  History Details Fragment  -->
+    <fragment
+        android:id="@+id/historyDetailFragment"
+        android:name="com.eeszen.reptide.ui.history.HistoryDetailFragment"
+        android:label="fragment_history_detail"
+        tools:layout="@layout/fragment_history_detail" >
+        <argument
+            android:name="historyId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_historyDetailFragment_to_historyExerciseFragment"
+            app:destination="@id/historyExerciseFragment" />
+    </fragment>
+
+    <!--  History Exercise Details Fragment  -->
+    <fragment
+        android:id="@+id/historyExerciseFragment"
+        android:name="com.eeszen.reptide.ui.history.HistoryExerciseFragment"
+        android:label="fragment_history_exercise"
+        tools:layout="@layout/fragment_history_detail_exercise" >
+        <argument
+            android:name="exerciseHistoryId"
+            app:argType="integer"/>
+    </fragment>
+
+
+</navigation>
