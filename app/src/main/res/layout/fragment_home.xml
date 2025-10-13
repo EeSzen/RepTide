@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black">
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="@dimen/xl"
+        android:paddingTop="@dimen/xxxl"
+        android:scrollbars="none"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:dividerPadding="@dimen/m">
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textSize="@dimen/tx_xxxxl"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/xxl" />
+
+            <!-- Row 1: Workout summary + Weight -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/m">
+
+                <!-- Workout summary card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/xxs"
+                    android:padding="@dimen/xl"
+                    app:cardBackgroundColor="@color/dark_gray"
+                    app:cardCornerRadius="@dimen/xxl"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:padding="@dimen/xl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvHomeWorkoutType"
+                            android:text="@string/type_placeholder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/tx_xxxxl"
+                            android:textStyle="bold"
+                            android:textColor="@color/orange" />
+
+                        <TextView
+                            android:text="@string/last_category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/tx_l"
+                            android:textColor="@color/grey" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Weight card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/xxs"
+                    android:padding="@dimen/xl"
+                    app:cardBackgroundColor="@color/dark_gray"
+                    app:cardCornerRadius="@dimen/xxl"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/xl"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tvHomePR"
+                            android:text="@string/pr_placeholder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/tx_xxxxl"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnPrimaryContainer" />
+
+                        <TextView
+                            android:text="@string/kgs_pr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/tx_l"
+                            android:textColor="@color/grey" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Volume lifted -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/xl"
+                app:cardBackgroundColor="@color/dark_gray"
+                app:cardCornerRadius="@dimen/xxl"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/xl"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="@string/last_workout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/tx_l"
+                        android:textColor="@color/grey"
+                        android:layout_marginBottom="@dimen/xxxs" />
+
+                    <TextView
+                        android:id="@+id/tvHomeLastWorkoutName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/workout_placeholder"
+                        android:textSize="@dimen/tx_xxxl"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorOnPrimaryContainer"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:maxLines="1"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Weight Progress Graph -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/m"
+                app:cardBackgroundColor="@color/dark_gray"
+                app:cardCornerRadius="@dimen/xxl"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/xl">
+
+                    <TextView
+                        android:text="@string/weight_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/tx_l"
+                        android:layout_marginBottom="@dimen/xxs" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/weightLineChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginBottom="@dimen/xs" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <!-- Start Workout -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/m"
+                android:layout_marginBottom="@dimen/xxxxl"
+                app:cardBackgroundColor="@color/dark_gray"
+                app:cardCornerRadius="@dimen/xxl"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/xl">
+
+                    <TextView
+                        android:text="@string/start_workout_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/tx_l"
+                        android:layout_marginBottom="@dimen/xxs" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/navigateWorkoutFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cornerRadius="@dimen/m"
+                        android:text="@string/start"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

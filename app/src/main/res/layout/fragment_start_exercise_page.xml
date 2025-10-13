@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/xl">
+
+    <!-- Exercise Title -->
+    <TextView
+        android:id="@+id/tvExerciseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/exercise_placeholder"
+        android:textSize="@dimen/tx_xxl"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/l" />
+
+    <!-- Sets RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSets"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/xs" />
+
+</LinearLayout>
