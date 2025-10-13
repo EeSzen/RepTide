@@ -1,6 +1,11 @@
 package com.eeszen.reptide.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Exercise(
+    @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val name: String,
     val sets: Int,

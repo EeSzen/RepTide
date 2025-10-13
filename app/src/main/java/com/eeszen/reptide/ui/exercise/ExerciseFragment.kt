@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +17,9 @@ import kotlinx.coroutines.launch
 
 
 class ExerciseFragment : Fragment() {
-    private val viewModel: ExerciseViewModel by viewModels()
+    private val viewModel: ExerciseViewModel by viewModels{
+        ExerciseViewModel.Factory
+    }
 
     private lateinit var binding: FragmentExerciseBinding
     private lateinit var exerciseAdapter: ExerciseAdapter
@@ -31,6 +34,10 @@ class ExerciseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setFragmentResultListener("manage_exercise") { _, _ ->
+            viewModel.refresh()
+        }
 
         setupAdapter()
         observeExercises()
@@ -59,16 +66,21 @@ class ExerciseFragment : Fragment() {
         }
     }
 
+    private fun updateEmptyState(isEmpty: Boolean) {
+        binding.llEmpty.visibility = if (isEmpty) View.VISIBLE else View.GONE
+    }
+
     override fun onResume() {
         super.onResume()
-        viewModel.getExercises()
+        viewModel.refresh()
     }
 
 
     private fun observeExercises() {
-        viewLifecycleOwner.lifecycleScope.launch {
+        lifecycleScope.launch {
             viewModel.exercises.collect { exercises ->
                 exerciseAdapter.setExercises(exercises)
+                updateEmptyState(exercises.isEmpty())
             }
         }
     }

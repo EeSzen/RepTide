@@ -17,30 +17,25 @@ import com.google.android.material.chip.Chip
 import kotlinx.coroutines.launch
 
 class AddExerciseFragment : BaseManageExerciseFragment() {
-    private val viewModel: AddExerciseViewModel by viewModels()
+    private val viewModel: AddExerciseViewModel by viewModels{
+        AddExerciseViewModel.Factory
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupExerciseCategory()
-
         binding.run {
-            // toolbar
-            toolbarTitle.text = getString(R.string.manage_exercise,"Add New")
-            ivBack.setOnClickListener {
-                findNavController().popBackStack()
-            }
+            setupToolbar()
+            setupNumberPicker()
+            setupSubmitButton()
+            launchCoroutines()
+        }
+    }
 
-            // Setup NumberPickers
-            npSets.minValue = 1
-            npSets.maxValue = 10
-            npSets.wrapSelectorWheel = true
-
-            npReps.minValue = 1
-            npReps.maxValue = 30
-            npReps.wrapSelectorWheel = true
-
-            // Submit Button
+    fun setupSubmitButton(){
+        // Submit Button
+        binding.run {
             mbSubmit.setOnClickListener {
                 val exerciseName = etName.text.toString().trim()
 
@@ -60,17 +55,40 @@ class AddExerciseFragment : BaseManageExerciseFragment() {
                     reps = reps
                 )
             }
-            //  collect flows
-            lifecycleScope.launch {
-                viewModel.error.collect{ errorMessage ->
-                    showError(errorMessage)
-                }
-            }
+        }
+    }
 
-            lifecycleScope.launch {
-                viewModel.finish.collect{
-                    findNavController().popBackStack()
-                }
+    fun setupNumberPicker(){
+        binding.run {
+            // Setup NumberPickers
+            npSets.minValue = 1
+            npSets.maxValue = 10
+            npSets.wrapSelectorWheel = true
+
+            npReps.minValue = 1
+            npReps.maxValue = 30
+            npReps.wrapSelectorWheel = true
+        }
+    }
+
+    fun setupToolbar(){
+        // toolbar
+        binding.toolbarTitle.text = getString(R.string.manage_exercise,"Add New")
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    fun launchCoroutines(){
+        //  collect flows
+        lifecycleScope.launch {
+            viewModel.error.collect{ errorMessage ->
+                showError(errorMessage)
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.finish.collect{
+                findNavController().popBackStack()
             }
         }
     }

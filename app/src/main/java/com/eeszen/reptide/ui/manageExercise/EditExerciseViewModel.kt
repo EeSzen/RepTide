@@ -1,10 +1,16 @@
 package com.eeszen.reptide.ui.manageExercise
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.eeszen.reptide.RepTideApp
 import com.eeszen.reptide.data.model.Exercise
 import com.eeszen.reptide.data.model.WorkoutType
 import com.eeszen.reptide.data.repo.ExerciseRepo
+import com.eeszen.reptide.data.repo.ExerciseRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +19,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class EditExerciseViewModel(
-    private val repo: ExerciseRepo = ExerciseRepo.getInstance()
+    private val repo: ExerciseRepository
 ) : ViewModel() {
 
     private val _exercise = MutableStateFlow<Exercise?>(null)
@@ -26,11 +32,11 @@ class EditExerciseViewModel(
     val error: SharedFlow<String> = _error
 
     fun loadExercise(id:Int){
-        val clickedExercise = repo.getExercise(id)
-        if (clickedExercise != null){
-            _exercise.value = clickedExercise
-        }else{
-            viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.IO) {
+            val clickedExercise = repo.getExercise(id)
+            if (clickedExercise != null) {
+                _exercise.value = clickedExercise
+            } else {
                 _error.emit("Exercise with ID: $id is not found")
             }
         }
@@ -50,7 +56,7 @@ class EditExerciseViewModel(
                     reps = reps
                 )
 
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     repo.updateExercise(updated)
                     _finish.emit(Unit)
                 }
@@ -64,4 +70,15 @@ class EditExerciseViewModel(
         }
     }
 
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                // Get the dependency in your factory
+                val myRepository = (this[APPLICATION_KEY] as RepTideApp).exerciseRepository
+                EditExerciseViewModel(
+                    repo = myRepository,
+                )
+            }
+        }
+    }
 }
