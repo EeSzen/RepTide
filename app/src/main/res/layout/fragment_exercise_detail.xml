@@ -69,13 +69,6 @@
                 android:text="@string/exercise_reps"
                 android:textSize="@dimen/tx_xl" />
 
-            <TextView
-                android:id="@+id/tvExerciseDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/duration_placeholder"
-                android:textSize="@dimen/tx_xl" />
-
         </LinearLayout>
     </ScrollView>
 

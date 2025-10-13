@@ -53,7 +53,6 @@ class ExerciseDetailFragment : Fragment() {
                         tvExerciseCategory.text = exercise.category.toString()
                         tvExerciseSets.text = getString(R.string.exercise_sets, exercise.sets)
                         tvExerciseReps.text = getString(R.string.exercise_reps, exercise.reps)
-                        tvExerciseDuration.text = getString(R.string.exercise_duration, exercise.duration)
 
                         toolbarTitle.text =
                             getString(R.string.exercise_details_title, exercise.name)

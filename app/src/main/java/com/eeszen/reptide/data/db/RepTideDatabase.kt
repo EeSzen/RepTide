@@ -18,8 +18,7 @@ import com.eeszen.reptide.data.model.logs.WorkoutLog
         Workout::class,
         Exercise::class,
         WorkoutLog::class,
-        ExerciseLog::class,
-        SetLog::class
+        ExerciseLog::class
     ],
     version = 1,
     exportSchema = false

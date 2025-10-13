@@ -52,7 +52,6 @@ class WorkoutDetailFragment : Fragment() {
                         tvWorkoutName.text = workout.name
                         tvWorkoutType.text = workout.type.toString()
                         tvExerciseCount.text = "${workout.exercises.size} Exercises"
-                        tvWorkoutDuration.text = "Duration: ${workout.duration} mins"
 
                         rvExercises.apply {
                             layoutManager = LinearLayoutManager(requireContext())
