@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.eeszen.reptide.R
 import com.eeszen.reptide.data.model.logs.SetLog
 import com.eeszen.reptide.databinding.LayoutSetItemExerciseBinding
+import androidx.core.widget.addTextChangedListener
+
 
 class SetAdapter(
     private var sets: List<SetLog>,
@@ -36,30 +38,31 @@ class SetAdapter(
 
                 cbComplete.isChecked = set.completed
 
-                // Update the model on user changes
                 cbComplete.setOnCheckedChangeListener { _, isChecked ->
-                    set.completed = isChecked
                     if (isChecked) {
-                        set.completedAt = System.currentTimeMillis()
+                        // Notify fragment that user wants to complete this set
+                        onSetUpdated?.let { it(set.copy(completed = true), index) }
+                        cbComplete.isChecked = false // temporarily uncheck until timer finishes
                     } else {
+                        set.completed = false
                         set.completedAt = null
-                    }
-                    onSetUpdated?.let { it(set,index) }
-                }
-
-                etReps.setOnFocusChangeListener { _, hasFocus ->
-                    if (!hasFocus) {
-                        val input = etReps.text.toString().toIntOrNull()
-                        if (input != null) set.actualReps = input
-                        onSetUpdated?.let { it(set,index) }
+                        onSetUpdated?.let { it(set, index) }
                     }
                 }
 
-                etWeight.setOnFocusChangeListener { _, hasFocus ->
-                    if (!hasFocus) {
-                        val input = etWeight.text.toString().toDoubleOrNull()
-                        if (input != null) set.actualWeight = input
-                        onSetUpdated?.let { it(set,index) }
+                etReps.addTextChangedListener { editable ->
+                    val input = editable?.toString()?.toIntOrNull()
+                    if (input != null) {
+                        set.actualReps = input
+                        onSetUpdated?.let { it(set, index) }
+                    }
+                }
+
+                etWeight.addTextChangedListener { editable ->
+                    val input = editable?.toString()?.toDoubleOrNull()
+                    if (input != null) {
+                        set.actualWeight = input
+                        onSetUpdated?.let { it(set, index) }
                     }
                 }
             }

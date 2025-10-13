@@ -7,64 +7,82 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eeszen.reptide.R
+import com.eeszen.reptide.RepTideApp
 import com.eeszen.reptide.data.model.WorkoutType
-import com.eeszen.reptide.data.repo.ExerciseRepo
+import com.eeszen.reptide.data.repo.ExerciseRepository
 import com.eeszen.reptide.ui.adapter.ExerciseAdapter
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.launch
 
 class AddWorkoutFragment : BaseManageWorkoutFragment() {
-    private val viewModel: AddWorkoutViewModel by viewModels()
-    private val repo : ExerciseRepo = ExerciseRepo.getInstance()
+    private val viewModel: AddWorkoutViewModel by viewModels {
+        AddWorkoutViewModel.Factory
+    }
+
+    private lateinit var repo: ExerciseRepository
+    private lateinit var adapter: ExerciseAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        repo = (requireActivity().application as RepTideApp).exerciseRepository
         setupWorkoutTypes()
+        setupToolbar()
+        setupExerciseList()
+        setupSubmitButton()
+        launchCoroutines()
+    }
 
+    fun setupToolbar() {
         binding.run {
-            // toolbar
-            toolbarTitle.text = getString(R.string.manage_workout,"Add New")
+            toolbarTitle.text = getString(R.string.manage_workout, "Add New")
             ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
+        }
+    }
 
-            // exercises list
-            val adapter = ExerciseAdapter(repo.getAllExercises())
-            rvAllExercises.adapter = adapter
-            rvAllExercises.layoutManager = LinearLayoutManager(requireContext())
+    fun setupExerciseList() {
+        adapter = ExerciseAdapter(emptyList(), onCheckedChange = { _, _ -> })
+        binding.rvAllExercises.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvAllExercises.adapter = adapter
 
-            // Submit Button
-            mbSubmit.setOnClickListener {
-                val workoutName = etName.text.toString().trim()
-                // chip logic
-                val checkedId = chipGroup.checkedChipId
-                val selectedChip = chipGroup.findViewById<Chip>(checkedId)
-                val selectedType = selectedChip?.tag as? WorkoutType?:WorkoutType.PUSH
-
-                // selected exercises
-                val selectedExercises = adapter.getSelectedExercises()
-
-                viewModel.addWorkout(
-                    name = workoutName,
-                    type = selectedType,
-                    exercises = selectedExercises
-                )
+        lifecycleScope.launch {
+            repo.getAllExercises().collect { exercises ->
+                adapter.setExercises(exercises)
             }
-            //  collect flows
-            lifecycleScope.launch {
-                viewModel.error.collect{ errorMessage ->
-                    showError(errorMessage)
-                }
+        }
+    }
+
+    fun setupSubmitButton() {
+        binding.mbSubmit.setOnClickListener {
+            val name = binding.etName.text.toString().trim()
+
+            val checkedId = binding.chipGroup.checkedChipId
+            val selectedChip = binding.chipGroup.findViewById<Chip>(checkedId)
+            val type = selectedChip?.tag as? WorkoutType ?: WorkoutType.PUSH
+
+            val selectedExercises = adapter.getSelectedExercises()
+
+            viewModel.addWorkout(
+                name = name,
+                type = type,
+                exercises = selectedExercises
+            )
+        }
+    }
+
+    fun launchCoroutines() {
+        lifecycleScope.launch {
+            viewModel.error.collect { errorMessage ->
+                showError(errorMessage)
             }
+        }
 
-            lifecycleScope.launch {
-                viewModel.finish.collect{
-                    findNavController().popBackStack()
-                }
+        lifecycleScope.launch {
+            viewModel.finish.collect {
+                findNavController().popBackStack()
             }
-
-
         }
     }
 }

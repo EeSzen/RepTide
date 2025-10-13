@@ -31,7 +31,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="@dimen/xl" />
+            android:paddingBottom="@dimen/bottom_padding" />
+
+        <LinearLayout
+            android:id="@+id/llEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/not_found"
+                android:layout_height="@dimen/not_found"
+                android:src="@drawable/ic_emo"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/empty_workout_text"
+                android:textSize="@dimen/tx_xl"
+                android:textColor="?attr/colorOnSurface" />
+        </LinearLayout>
 
         <!-- Add Workout Button -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton

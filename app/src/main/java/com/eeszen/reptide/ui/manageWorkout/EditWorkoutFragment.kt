@@ -2,89 +2,112 @@ package com.eeszen.reptide.ui.manageWorkout
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eeszen.reptide.R
+import com.eeszen.reptide.RepTideApp
+import com.eeszen.reptide.data.model.Workout
 import com.eeszen.reptide.data.model.WorkoutType
-import com.eeszen.reptide.data.repo.ExerciseRepo
+import com.eeszen.reptide.data.repo.ExerciseRepository
 import com.eeszen.reptide.ui.adapter.ExerciseAdapter
 import com.google.android.material.chip.Chip
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class EditWorkoutFragment : BaseManageWorkoutFragment() {
-    private val viewModel: EditWorkoutViewModel by viewModels()
+    private val viewModel: EditWorkoutViewModel by viewModels {
+        EditWorkoutViewModel.Factory
+    }
+
     private val args: EditWorkoutFragmentArgs by navArgs()
-    private val repo: ExerciseRepo = ExerciseRepo.getInstance()
+    private lateinit var repo: ExerciseRepository
+    private lateinit var adapter: ExerciseAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        repo = (requireActivity().application as RepTideApp).exerciseRepository
 
         setupWorkoutTypes()
+        setupObservers()
+    }
 
+    fun setupObservers() {
         viewModel.loadWorkout(args.workoutId)
 
         lifecycleScope.launch {
-            viewModel.workout.collect{ workout ->
+            viewModel.workout.collect { workout ->
                 workout?.let {
-                    binding.run {
-                        toolbarTitle.text = getString(R.string.update_workout,it.name)
-                        ivBack.setOnClickListener {
-                            findNavController().popBackStack()
-                        }
-
-                        etName.setText(it.name)
-
-                        // Type Chip
-                        for (i in 0 until chipGroup.childCount) {
-                            val chip = binding.chipGroup.getChildAt(i) as com.google.android.material.chip.Chip
-                            chip.isChecked = (chip.tag == it.type)
-                        }
-
-                        // exercises list
-                        val adapter = ExerciseAdapter(repo.getAllExercises())
-                        adapter.setPreselectedExercises(workout.exercises.map { it.id!! })
-
-                        rvAllExercises.adapter = adapter
-                        rvAllExercises.layoutManager = LinearLayoutManager(requireContext())
-
-                        mbSubmit.setOnClickListener {
-                            val workoutName = etName.text.toString().trim()
-                            // chip logic
-                            val checkedId = chipGroup.checkedChipId
-                            val selectedChip = chipGroup.findViewById<Chip>(checkedId)
-                            val selectedType = selectedChip?.tag as? WorkoutType ?: WorkoutType.PUSH
-
-                            // selected exercises
-                            val selectedExercises = adapter.getSelectedExercises()
-
-                            viewModel.editWorkout(
-                                name = workoutName,
-                                type = selectedType,
-                                exercises = selectedExercises
-                            )
-                        }
-
-                        //  collect flows
-                        lifecycleScope.launch {
-                            viewModel.error.collect{ errorMessage ->
-                                showError(errorMessage)
-                            }
-                        }
-
-                        lifecycleScope.launch {
-                            viewModel.finish.collect{
-                                findNavController().popBackStack()
-                            }
-                        }
-                    }
+                    setupToolbar(it.name)
+                    setupWorkoutFields(it.name, it.type)
+                    setupExerciseList(it)
+                    setupSubmitButton(it)
+                    launchCoroutines()
                 }
+            }
+        }
+    }
+
+    fun setupToolbar(name: String) {
+        binding.toolbarTitle.text = getString(R.string.update_workout, name)
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    fun setupWorkoutFields(name: String, type: WorkoutType) {
+        binding.etName.setText(name)
+        for (i in 0 until binding.chipGroup.childCount) {
+            val chip = binding.chipGroup.getChildAt(i) as Chip
+            chip.isChecked = (chip.tag == type)
+        }
+    }
+
+    fun setupExerciseList(workout: Workout) {
+        adapter = ExerciseAdapter(emptyList(), onCheckedChange = { _, _ -> })
+        binding.rvAllExercises.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvAllExercises.adapter = adapter
+
+        lifecycleScope.launch {
+            repo.getAllExercises().collect { exercises ->
+                val preselectedIds = workout.exercises.mapNotNull { it.id }
+                val updatedList = exercises.map {
+                    it.copy(isSelected = preselectedIds.contains(it.id))
+                }
+                adapter.setExercises(updatedList)
+            }
+        }
+    }
+
+    fun setupSubmitButton(workout: Workout) {
+        binding.mbSubmit.setOnClickListener {
+            val name = binding.etName.text.toString().trim()
+
+            val checkedId = binding.chipGroup.checkedChipId
+            val selectedChip = binding.chipGroup.findViewById<Chip>(checkedId)
+            val type = selectedChip?.tag as? WorkoutType ?: WorkoutType.PUSH
+
+            val selectedExercises = adapter.getSelectedExercises()
+
+            viewModel.editWorkout(
+                name = name,
+                type = type,
+                exercises = selectedExercises
+            )
+        }
+    }
+
+    fun launchCoroutines() {
+        lifecycleScope.launch {
+            viewModel.error.collect { errorMessage ->
+                showError(errorMessage)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.finish.collect {
+                findNavController().popBackStack()
             }
         }
     }

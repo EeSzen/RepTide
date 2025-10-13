@@ -84,18 +84,38 @@
         android:layout_margin="@dimen/m"
         android:orientation="vertical">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/mbEditWorkout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cornerRadius="@dimen/m"
-            android:text="@string/edit"/>
+            android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mbDeleteWorkout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cornerRadius="@dimen/m"
+                android:text="@string/delete"
+                android:layout_margin="@dimen/xxxxs"
+                android:backgroundTint="@color/orange"
+                android:textStyle="bold"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mbEditWorkout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cornerRadius="@dimen/m"
+                android:text="@string/edit"
+                android:layout_margin="@dimen/xxxxs"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mbStartWorkout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cornerRadius="@dimen/m"
+            android:layout_margin="@dimen/xxxxs"
             android:text="@string/start_workout_button"/>
 
     </LinearLayout>

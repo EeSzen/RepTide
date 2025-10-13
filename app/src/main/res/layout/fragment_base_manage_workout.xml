@@ -70,14 +70,21 @@
             android:textStyle="bold"
             android:layout_marginTop="@dimen/xxxl"/>
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup"
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:singleSelection="true"
-            app:singleLine="true"
-            android:layout_marginTop="@dimen/xxs"
-            app:chipSpacing="@dimen/s"/>
+            android:scrollbars="none"
+            android:layout_marginTop="@dimen/xxs">
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:singleLine="true"
+                android:layout_marginTop="@dimen/xxs"
+                app:chipSpacing="@dimen/s"/>
+        </HorizontalScrollView>
+
 
         <!--    Exercises    -->
         <TextView

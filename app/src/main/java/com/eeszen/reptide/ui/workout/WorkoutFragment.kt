@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,7 +19,9 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 class WorkoutFragment : Fragment() {
-    private val viewModel: WorkoutViewModel by viewModels()
+    private val viewModel: WorkoutViewModel by viewModels{
+        WorkoutViewModel.Factory
+    }
 
     private lateinit var binding: FragmentWorkoutBinding
     private lateinit var workoutAdapter: WorkoutAdapter
@@ -33,6 +36,10 @@ class WorkoutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setFragmentResultListener("manage_workout") { _, _ ->
+            viewModel.refresh()
+        }
 
         setupAdapter()
         observeWorkouts()
@@ -65,12 +72,16 @@ class WorkoutFragment : Fragment() {
         viewModel.refresh()
     }
 
-
     private fun observeWorkouts() {
-        viewLifecycleOwner.lifecycleScope.launch {
+        lifecycleScope.launch {
             viewModel.workouts.collect { workouts ->
                 workoutAdapter.setWorkouts(workouts)
+                updateEmptyState(workouts.isEmpty())
             }
         }
+    }
+
+    private fun updateEmptyState(isEmpty: Boolean) {
+        binding.llEmpty.visibility = if (isEmpty) View.VISIBLE else View.GONE
     }
 }

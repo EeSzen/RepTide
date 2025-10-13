@@ -52,4 +52,10 @@ class HistoryAdapter(
         val sdf = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
         return sdf.format(Date(timestamp))
     }
+
+    fun updateData(newLogs: List<WorkoutLog>) {
+        this.workoutLogs = newLogs
+        notifyDataSetChanged()
+    }
+
 }

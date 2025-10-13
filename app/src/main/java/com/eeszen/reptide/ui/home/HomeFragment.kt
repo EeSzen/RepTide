@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.eeszen.reptide.MainActivity
 import com.eeszen.reptide.R
 import com.eeszen.reptide.databinding.FragmentHomeBinding
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -23,7 +24,9 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels{
+        HomeViewModel.Factory
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,37 +39,70 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        lifecycleScope.launch {
-            viewModel.totalWeight.collectLatest { total ->
-                binding.tvHomeVolumeLifted.text = getString(R.string.total_volume_lifted, total)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.highestWeight.collectLatest { pr ->
-                binding.tvHomePR.text = pr.toString()
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.lastWorkoutType.collectLatest { type ->
-                binding.tvHomeWorkoutType.text = type?.name ?: "NULL"
-            }
-        }
+        launchCoroutines()
 
         binding.navigateWorkoutFragment.setOnClickListener {
             (requireActivity() as MainActivity).selectBottomNavItem(R.id.workoutFragment)
         }
 
-
-        setupWeightChart()
+        showChart()
     }
 
+    // Show Chart
+    private fun showChart(){
+        lifecycleScope.launch {
+            viewModel.completedWorkouts.collectLatest { workouts ->
+                if (workouts.isNotEmpty()) {
+                    setupWeightChart()
+                } else {
+                    binding.weightLineChart.clear()
+                    binding.weightLineChart.setNoDataText("No progress data yet")
+                }
+            }
+        }
+    }
+
+    // Home Details
+    private fun launchCoroutines(){
+        lifecycleScope.launch {
+            viewModel.highestWeight.collectLatest { pr ->
+                binding.tvHomePR.text = pr.toString()
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.lastWorkoutType.collectLatest { type ->
+                binding.tvHomeWorkoutType.text = type?.name ?: "NONE"
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.lastWorkoutName.collectLatest { name ->
+                binding.tvHomeLastWorkoutName.text = name.toString()
+            }
+        }
+    }
+
+    // Main Chart Logic
     private fun setupWeightChart() {
         val chart = binding.weightLineChart
 
         // Basic chart settings
+        chartSettings(chart)
+
+        // Progress Data
+        chartEntries(chart)
+
+        chartLayoutStyling(chart)
+
+        // Legend
+        val legend = chart.legend
+        legend.isEnabled = false
+
+        chart.animateX(1000)
+        chart.invalidate()
+    }
+
+    // Chart Settings
+    fun chartSettings(chart:LineChart){
         chart.description.isEnabled = false
         chart.setTouchEnabled(true)
         chart.isDragEnabled = true
@@ -76,12 +112,13 @@ class HomeFragment : Fragment() {
         chart.setNoDataText("No progress data yet")
         chart.setNoDataTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
         chart.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dark_gray))
+    }
 
-        // Progress Data
+    // Chart Data
+    fun chartEntries(chart: LineChart){
         val entries = viewModel.weightEntries().mapIndexed { i, weight ->
             Entry(i.toFloat(), weight)
         }
-
         val dataSet = LineDataSet(entries, "Weight Progress")
         dataSet.apply {
             color = ContextCompat.getColor(requireContext(), R.color.accent_blue)
@@ -96,10 +133,12 @@ class HomeFragment : Fragment() {
             fillColor = ContextCompat.getColor(requireContext(), R.color.accent_blue)
             fillAlpha = 40
         }
-
         val data = LineData(dataSet)
         chart.data = data
+    }
 
+    // Chart Axis Styling
+    fun chartLayoutStyling(chart: LineChart){
         // X-axis styling
         val xAxis = chart.xAxis
         xAxis.textColor = ContextCompat.getColor(requireContext(), android.R.color.white)
@@ -114,13 +153,6 @@ class HomeFragment : Fragment() {
 
         val rightAxis = chart.axisRight
         rightAxis.isEnabled = false
-
-        // Legend
-        val legend = chart.legend
-        legend.isEnabled = false
-
-        chart.animateX(1000)
-        chart.invalidate()
     }
 
     override fun onResume() {

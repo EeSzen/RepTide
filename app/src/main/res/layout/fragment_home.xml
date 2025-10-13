@@ -132,7 +132,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:text="@string/volume_lifted_7_days"
+                        android:text="@string/last_workout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/tx_l"
@@ -140,13 +140,16 @@
                         android:layout_marginBottom="@dimen/xxxs" />
 
                     <TextView
-                        android:id="@+id/tvHomeVolumeLifted"
+                        android:id="@+id/tvHomeLastWorkoutName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/total_volume_lifted"
+                        android:text="@string/workout_placeholder"
                         android:textSize="@dimen/tx_xxxl"
                         android:textStyle="bold"
-                        android:textColor="?attr/colorOnPrimaryContainer" />
+                        android:textColor="?attr/colorOnPrimaryContainer"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:maxLines="1"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

@@ -1,13 +1,22 @@
 package com.eeszen.reptide.ui.startWorkout
 
+import android.app.Dialog
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.eeszen.reptide.MainActivity
@@ -19,15 +28,21 @@ import com.eeszen.reptide.data.model.logs.ExerciseLog
 import com.eeszen.reptide.data.model.logs.SetLog
 import com.eeszen.reptide.data.model.logs.WorkoutLog
 import com.eeszen.reptide.data.repo.WorkoutRepo
+import com.eeszen.reptide.data.repo.WorkoutRepository
+import com.eeszen.reptide.databinding.DialogRestTimerBinding
 import com.eeszen.reptide.databinding.FragmentStartWorkoutBinding
 import com.eeszen.reptide.ui.adapter.StartExerciseAdapter
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class StartWorkoutFragment : Fragment() {
     private val args: StartWorkoutFragmentArgs by navArgs()
     private lateinit var binding: FragmentStartWorkoutBinding
-    private val viewModel : StartWorkoutViewModel by viewModels()
+    private val viewModel : StartWorkoutViewModel by viewModels{
+        StartWorkoutViewModel.Factory
+    }
     private lateinit var startExerciseAdapter: StartExerciseAdapter
 
     override fun onCreateView(
@@ -43,38 +58,67 @@ class StartWorkoutFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val workoutId = args.workoutId
-        val workout = viewModel.getWorkoutById(workoutId) ?: return
-        val workoutLog = workout.toWorkoutLog()
+        lifecycleScope.launch (Dispatchers.IO){
+            val workout = viewModel.getWorkoutById(workoutId)
 
-        binding.run {
-            toolbarTitle.text = workout.name
-            ivBack.setOnClickListener {
-                findNavController().popBackStack()
-            }
+            if (workout != null){
+                val workoutLog = workout.toWorkoutLog()
+                launch (Dispatchers.Main){
+                    binding.run {
+                        toolbarTitle.text = workout.name
+                        ivBack.setOnClickListener {
+                            findNavController().popBackStack()
+                        }
 
-//            // Setup ViewPager with adapter
-            startExerciseAdapter = StartExerciseAdapter(workoutLog.exercises) { updatedExercise, index ->
-                workoutLog.exercises[index] = updatedExercise
-            }
-            binding.viewPagerExercises.adapter = startExerciseAdapter
+                        // Setup ViewPager with adapter
+//                        startExerciseAdapter = StartExerciseAdapter(workoutLog.exercises) { updatedExercise, index ->
+//                            workoutLog.exercises[index] = updatedExercise
+//                        }
 
-            viewPagerExercises.adapter = startExerciseAdapter
+                        startExerciseAdapter = StartExerciseAdapter(workoutLog.exercises) { updatedExercise, index ->
+                            // Check if the set was marked complete — if so, show timer first
+                            if (updatedExercise.sets.any { it.completed && it.completedAt == null }) {
+                                showRestTimerDialog {
+                                    // After timer finishes, mark the set as completed properly
+                                    updatedExercise.sets.forEach {
+                                        if (it.completed && it.completedAt == null) {
+                                            it.completedAt = System.currentTimeMillis()
+                                        }
+                                    }
+                                    workoutLog.exercises[index] = updatedExercise
+                                    startExerciseAdapter.notifyItemChanged(index)
+                                }
+                            } else {
+                                // Normal update
+                                workoutLog.exercises[index] = updatedExercise
+                            }
+                        }
 
-            setupChipNavigation(workout)
-            syncChipsWithPager(workout)
+                        binding.viewPagerExercises.adapter = startExerciseAdapter
 
-            mbFinishWorkout.setOnClickListener {
-                viewModel.currentWorkoutLog = workoutLog
-                val allExercisesCompleted = workoutLog.exercises.all { it.isCompleted }
+                        viewPagerExercises.adapter = startExerciseAdapter
 
-                if (allExercisesCompleted) {
-                    workoutLog.isCompleted = true
-                    workoutLog.finishedAt = System.currentTimeMillis()
-                    WorkoutRepo.getInstance().addWorkoutLog(workoutLog)
+                        setupChipNavigation(workout)
+                        syncChipsWithPager(workout)
 
-                    (requireActivity() as MainActivity).selectBottomNavItem(R.id.historyFragment)
-                } else {
-                    showError("Finish all exercises first!")
+                        mbFinishWorkout.setOnClickListener {
+                            viewModel.currentWorkoutLog = workoutLog
+                            val allExercisesCompleted = workoutLog.exercises.all { it.isCompleted }
+
+                            if (allExercisesCompleted) {
+                                workoutLog.isCompleted = true
+                                workoutLog.finishedAt = System.currentTimeMillis()
+
+                                lifecycleScope.launch(Dispatchers.IO) {
+                                    viewModel.addWorkoutLog(workoutLog)
+                                }
+
+                                (requireActivity() as MainActivity).selectBottomNavItem(R.id.historyFragment)
+                            } else {
+                                showError("Finish all exercises first!")
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -87,25 +131,10 @@ class StartWorkoutFragment : Fragment() {
     }
 
     // Mapper Function (convert Exercise to ExerciseLog)
-//    fun Exercise.toExerciseLog(): ExerciseLog {
-//        return ExerciseLog(
-//            id = this.id,
-//            exerciseId = this.id,
-//            name = name,
-//            category = category,
-//            sets = (1..sets).map { setNum ->
-//                SetLog(
-//                    setNumber = setNum,
-//                    plannedReps = reps,
-//                    plannedWeight = 0.0
-//                )
-//            }.toMutableList()
-//        )
-//    }
     fun Exercise.toExerciseLog(): ExerciseLog {
         return ExerciseLog(
-//            id = null,
             id = (System.currentTimeMillis() + this.id.hashCode()).toInt(), // before room
+//            id = 0,
             exerciseId = this.id,
             name = name,
             category = category,
@@ -168,4 +197,56 @@ class StartWorkoutFragment : Fragment() {
             }
         )
     }
+
+    private fun showRestTimerDialog(onTimerFinished: () -> Unit) {
+        val dialog = Dialog(requireContext())
+        val binding = DialogRestTimerBinding.inflate(layoutInflater)
+        dialog.setContentView(binding.root)
+        dialog.setCancelable(false)
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+
+        var selectedTime = 30_000L
+
+        // Radio group listener
+        binding.radioGroupTime.setOnCheckedChangeListener { _, checkedId ->
+            selectedTime = when (checkedId) {
+                R.id.radio30 -> 30_000L
+                R.id.radio60 -> 60_000L
+                R.id.radio90 -> 90_000L
+                R.id.radioSkip -> 0L
+                else -> 30_000L
+            }
+        }
+
+        binding.btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        binding.btnStart.setOnClickListener {
+            binding.radioGroupTime.visibility = View.GONE
+            binding.btnStart.visibility = View.GONE
+            binding.tvTimer.visibility = View.VISIBLE
+
+            object : CountDownTimer(selectedTime, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    binding.tvTimer.text = "${millisUntilFinished / 1000}s"
+                }
+
+                override fun onFinish() {
+                    dialog.dismiss()
+                    // vibration
+                    val vibrator = dialog.context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    vibrator.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE))
+                    onTimerFinished.invoke()
+                }
+
+            }.start()
+        }
+
+        dialog.show()
+    }
+
+
+
+
 }
